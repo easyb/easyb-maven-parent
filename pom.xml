@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.easyb</groupId>
+	<artifactId>easyb-maven-parent</artifactId>
+	<version>1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>easyb-maven-parent</name>
+	<description>
+    This is the top-level parent project for easyb artefacts.
+
+    It configures distribution repositories and top level plugin defaults. Parent poms are not to include dependencies of any kind. 
+  </description>
+	<properties>
+		<gmaven.version>1.3</gmaven.version>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.0-beta-1</version>
+				<!-- Invocation is defined by the release plugin goal set hence no executions -->
+				<configuration>
+					<rules>
+						<requireMavenVersion>
+							<!--
+                2.2.1 has broken checksum generation in that it can't verify its own checksums when using the release plugin. Not
+                sure how they managed that or why it has not been fixed
+              -->
+							<version>[2.1.0]</version>
+						</requireMavenVersion>
+						<requireReleaseDeps>
+							<!--  Don't allow releases with snapshop deps or parents -->
+							<message>No Snapshots Allowed!</message>
+							<failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
+							<searchTransitive>true</searchTransitive>
+						</requireReleaseDeps>
+						<!-- Don't allow accidental inclusion of commons logging or log4j -->
+						<bannedDependencies>
+							<excludes>
+								<exclude>commons-logging</exclude>
+								<exclude>commons-logging-api</exclude>
+								<exclude>log4j:log4j</exclude>
+							</excludes>
+						</bannedDependencies>
+					</rules>
+					<fail>true</fail>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.gmaven</groupId>
+					<artifactId>gmaven-plugin</artifactId>
+					<version>${gmaven.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generateStubs</goal>
+								<goal>compile</goal>
+								<goal>generateTestStubs</goal>
+								<goal>testCompile</goal>
+							</goals>
+							<configuration>
+								<!-- providerSelection probably defaults to 1.7 now -->
+								<providerSelection>1.7</providerSelection>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
