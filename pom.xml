@@ -38,12 +38,12 @@
 		<repository>
 			<id>sonatype-staging</id>
 			<name>oss.sonatype.org Staging Repository</name>
-			<url>http://localhost:8081/content/repositories/releases/</url>
+			<url>http://macmini:8081/nexus/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>github-snapshots</id>
+			<id>home-snapshots</id>
 			<name>oss.sonatype.org github Release Repository Snapshot Repository</name>
-			<url>http://localhost:8081/content/repositories/snapshots/</url>
+			<url>http://macmini:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<build>
