@@ -90,6 +90,7 @@
 					<goals>enforcer:enforce deploy</goals>
 					<tagBase>tags/release/${project.groupId}/</tagBase>
 					<pushChanges>false</pushChanges>
+					<localCheckout>true</localCheckout>					
 				</configuration>
 			</plugin>
 			<plugin>
