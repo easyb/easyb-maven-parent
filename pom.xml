@@ -51,7 +51,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>1.0-beta-1</version>
+				<version>1.0</version>
 				<!-- Invocation is defined by the release plugin goal set hence no executions -->
 				<configuration>
 					<rules>
@@ -60,7 +60,7 @@
                 2.2.1 has broken checksum generation in that it can't verify its own checksums when using the release plugin. Not
                 sure how they managed that or why it has not been fixed
               -->
-							<version>[2.1.0]</version>
+							<version>[3.0.1]</version>
 						</requireMavenVersion>
 						<requireReleaseDeps>
 							<!--  Don't allow releases with snapshop deps or parents -->
@@ -82,7 +82,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.1</version>
 				<configuration>
 					<mavenExecutorId>forked-path</mavenExecutorId>
 					<arguments>-Deasyb.release</arguments>
