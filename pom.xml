@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.easyb</groupId>
 	<artifactId>easyb-maven-parent</artifactId>
-	<version>1.9-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>easyb-maven-parent</name>
 	<description>
@@ -12,15 +12,15 @@
     It configures distribution repositories and top level plugin defaults. Parent poms are not to include dependencies of any kind. 
   </description>
 	<scm>
-		<connection>scm:git:git://github.com/easyb/easyb-maven-parent.git</connection>
-		<developerConnection>scm:git:git://github.com/easyb/easyb-maven-parent.git</developerConnection>
+		<connection>scm:git:git://github.com/easyb/easyb-maven-parent</connection>
+		<developerConnection>scm:git:git://github.com/easyb/easyb-maven-parent</developerConnection>
 		<url>http://github.com/easyb/easyb-maven-parent</url>
 	</scm>
 	<properties>
 		<gmaven.version>1.3</gmaven.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<!--
+	
 	<distributionManagement>
 		<repository>
 			<id>sonatype-staging</id>
@@ -31,19 +31,6 @@
 			<id>github-snapshots</id>
 			<name>oss.sonatype.org github Release Repository Snapshot Repository</name>
 			<url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
-	-->
-	<distributionManagement>
-		<repository>
-			<id>home-releases</id>
-			<name>oss.sonatype.org Staging Repository</name>
-			<url>http://macmini:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>home-snapshots</id>
-			<name>oss.sonatype.org github Release Repository Snapshot Repository</name>
-			<url>http://macmini:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<profiles>
