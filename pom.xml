@@ -144,6 +144,25 @@
 					<fail>true</fail>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>${gmaven.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generateStubs</goal>
+							<goal>compile</goal>
+							<goal>generateTestStubs</goal>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<!-- providerSelection probably defaults to 1.7 now -->
+							<providerSelection>1.7</providerSelection>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -176,25 +195,6 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>1.2</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.gmaven</groupId>
-					<artifactId>gmaven-plugin</artifactId>
-					<version>${gmaven.version}</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>generateStubs</goal>
-								<goal>compile</goal>
-								<goal>generateTestStubs</goal>
-								<goal>testCompile</goal>
-							</goals>
-							<configuration>
-								<!-- providerSelection probably defaults to 1.7 now -->
-								<providerSelection>1.7</providerSelection>
-							</configuration>
-						</execution>
-					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
