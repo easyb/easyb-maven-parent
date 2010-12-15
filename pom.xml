@@ -41,6 +41,7 @@
 		</license>
 	</licenses>
 	<scm>
+		<!-- this is the format documented in the 1.4 SCM plugin -->
 		<connection>scm:git:git://github.com/easyb/easyb-maven-parent</connection>
 		<developerConnection>scm:git:git://github.com/easyb/easyb-maven-parent</developerConnection>
 		<url>http://github.com/easyb/easyb-maven-parent</url>
@@ -56,9 +57,9 @@
 			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
-			<id>github-snapshots</id>
-			<name>oss.sonatype.org github Release Repository Snapshot Repository</name>
-			<url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
+			<id>sonatype-snapshots</id>
+			<name>oss.sonatype.org Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<profiles>
@@ -139,14 +140,6 @@
 							<failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
 							<searchTransitive>true</searchTransitive>
 						</requireReleaseDeps>
-						<!-- Don't allow accidental inclusion of commons logging or log4j -->
-						<bannedDependencies>
-							<excludes>
-								<exclude>commons-logging</exclude>
-								<exclude>commons-logging-api</exclude>
-								<exclude>log4j:log4j</exclude>
-							</excludes>
-						</bannedDependencies>
 					</rules>
 					<fail>true</fail>
 				</configuration>
@@ -167,7 +160,7 @@
 						<arguments>-Deasyb.release</arguments>
 						<preparationGoals>clean enforcer:enforce verify</preparationGoals>
 						<goals>enforcer:enforce deploy</goals>
-						<tagBase>tags/release/${project.groupId}/</tagBase>
+						<tagBase>release/${project.groupId}/</tagBase>
 						<pushChanges>false</pushChanges>
 						<localCheckout>true</localCheckout>
 					</configuration>
