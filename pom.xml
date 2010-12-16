@@ -10,17 +10,46 @@
     This is the top-level parent project for easyb artefacts.
 
     It configures distribution repositories and top level plugin defaults. Parent poms are not to include dependencies of any kind. 
-  </description>
+    </description>
+	<url>http://www.easyb.org</url>
+	<developers>
+		<developer>
+			<id>ajglover</id>
+			<name>Andy Glover</name>
+		</developer>
+		<developer>
+			<id>kenneth.s.brooks</id>
+			<name>Ken Brooks</name>
+		</developer>
+		<developer>
+			<id>rfciii</id>
+			<name>Rod Coffin</name>
+			<email>rod@rodcoffin.com</email>
+			<url>http://www.rodcoffin.com</url>
+		</developer>
+		<developer>
+			<id>rvowles</id>
+			<name>Richard Vowles</name>
+			<email>richard@bluetrainsoftware.com</email>
+			<url>http://www.bluetrainsoftware.com</url>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
 	<scm>
-		<connection>scm:git:git@github.com:easyb/easyb-maven-parent.git</connection>
-		<developerConnection>scm:git:git@github.com:easyb/easyb-maven-parent.git</developerConnection>
+		<!-- this is the format documented in the 1.4 SCM plugin -->
+		<connection>scm:git:git://github.com/easyb/easyb-maven-parent</connection>
+		<developerConnection>scm:git:git://github.com/easyb/easyb-maven-parent</developerConnection>
 		<url>http://github.com/easyb/easyb-maven-parent</url>
 	</scm>
 	<properties>
 		<gmaven.version>1.3</gmaven.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<!--
 	<distributionManagement>
 		<repository>
 			<id>sonatype-staging</id>
@@ -28,24 +57,67 @@
 			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
-			<id>github-snapshots</id>
-			<name>oss.sonatype.org github Release Repository Snapshot Repository</name>
-			<url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
+			<id>sonatype-snapshots</id>
+			<name>oss.sonatype.org Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	-->
-	<distributionManagement>
-		<repository>
-			<id>home-releases</id>
-			<name>oss.sonatype.org Staging Repository</name>
-			<url>http://macmini:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>home-snapshots</id>
-			<name>oss.sonatype.org github Release Repository Snapshot Repository</name>
-			<url>http://macmini:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<profiles>
+		<profile>
+			<!-- adtivate the sonatype profile when a release is being done -->
+			<id>sonaytpe</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.1.2</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.7</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -68,51 +140,50 @@
 							<failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
 							<searchTransitive>true</searchTransitive>
 						</requireReleaseDeps>
-						<!-- Don't allow accidental inclusion of commons logging or log4j -->
-						<bannedDependencies>
-							<excludes>
-								<exclude>commons-logging</exclude>
-								<exclude>commons-logging-api</exclude>
-								<exclude>log4j:log4j</exclude>
-							</excludes>
-						</bannedDependencies>
 					</rules>
 					<fail>true</fail>
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<mavenExecutorId>forked-path</mavenExecutorId>
-					<arguments>-Deasyb.release</arguments>
-					<preparationGoals>clean enforcer:enforce verify</preparationGoals>
-					<goals>enforcer:enforce deploy</goals>
-					<tagBase>tags/release/${project.groupId}/</tagBase>
-					<pushChanges>false</pushChanges>
-					<localCheckout>true</localCheckout>					
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.gmaven</groupId>
 				<artifactId>gmaven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.1</version>
+				<version>${gmaven.version}</version>
 				<executions>
 					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
 						<goals>
-							<goal>sign</goal>
+							<goal>generateStubs</goal>
+							<goal>compile</goal>
+							<goal>generateTestStubs</goal>
+							<goal>testCompile</goal>
 						</goals>
+						<configuration>
+							<!-- providerSelection probably defaults to 1.7 now -->
+							<providerSelection>1.7</providerSelection>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.1</version>
+					<configuration>
+						<mavenExecutorId>forked-path</mavenExecutorId>
+						<arguments>-Deasyb.release</arguments>
+						<preparationGoals>clean enforcer:enforce verify</preparationGoals>
+						<goals>enforcer:enforce deploy</goals>
+						<tagBase>release/${project.groupId}/</tagBase>
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+					</configuration>
+				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
@@ -124,25 +195,6 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>1.2</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.gmaven</groupId>
-					<artifactId>gmaven-plugin</artifactId>
-					<version>${gmaven.version}</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>generateStubs</goal>
-								<goal>compile</goal>
-								<goal>generateTestStubs</goal>
-								<goal>testCompile</goal>
-							</goals>
-							<configuration>
-								<!-- providerSelection probably defaults to 1.7 now -->
-								<providerSelection>1.7</providerSelection>
-							</configuration>
-						</execution>
-					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
