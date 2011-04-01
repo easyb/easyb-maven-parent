@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.easyb</groupId>
 	<artifactId>easyb-maven-parent</artifactId>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.3</version>
 	<packaging>pom</packaging>
 	<name>easyb-maven-parent</name>
 	<description>
