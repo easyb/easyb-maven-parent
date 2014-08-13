@@ -112,7 +112,22 @@
             <artifactId>groovy-eclipse-batch</artifactId>
             <version>2.1.8-01</version>
           </dependency>
-        </dependencies>
+	  <dependency>
+		<groupId>org.eclipse.core</groupId>
+		<artifactId>org.eclipse.core.contenttype</artifactId>
+		<version>3.4.100.v20100505-1235</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>org.eclipse.equinox.preferences</artifactId>
+				<groupId>org.eclipse.equinox</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>org.eclipse.equinox.registry</artifactId>
+				<groupId>org.eclipse.equinox</groupId>
+			</exclusion>
+		</exclusions>
+		</dependency>
+      </dependencies>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
